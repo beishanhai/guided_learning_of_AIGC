@@ -1,0 +1,85 @@
+# 单机原型部署（文档 §3 部署层）
+# API 与 Worker 分进程；PostgreSQL 与 Redis 由容器提供；对象存储走私有 S3 或本地卷。
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: chai_jing
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      POSTGRES_DB: chai_jing
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chai_jing"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+
+  api:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.backend
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      CJX_ENV: prod
+      CJX_DATABASE_URL: postgresql+psycopg://chai_jing:${POSTGRES_PASSWORD:-change-me}@db:5432/chai_jing
+      CJX_QUEUE_BACKEND: celery
+      CJX_REDIS_URL: redis://redis:6379/0
+      CJX_STORAGE_BACKEND: local
+      CJX_STORAGE_ROOT: /data/storage
+      CJX_SECRET_KEY: ${CJX_SECRET_KEY:?必须注入}
+      CJX_MULTIMODAL_PROVIDER: ${CJX_MULTIMODAL_PROVIDER:-offline}
+      CJX_MULTIMODAL_API_KEY: ${CJX_MULTIMODAL_API_KEY:-}
+      CJX_MULTIMODAL_BASE_URL: ${CJX_MULTIMODAL_BASE_URL:-}
+      CJX_ASR_PROVIDER: ${CJX_ASR_PROVIDER:-none}
+    volumes:
+      - storage:/data/storage
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    ports:
+      - "8000:8000"
+
+  worker:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.backend
+    command: ["python", "-m", "app.worker"]
+    environment:
+      CJX_ENV: prod
+      CJX_DATABASE_URL: postgresql+psycopg://chai_jing:${POSTGRES_PASSWORD:-change-me}@db:5432/chai_jing
+      CJX_STORAGE_BACKEND: local
+      CJX_STORAGE_ROOT: /data/storage
+      CJX_SECRET_KEY: ${CJX_SECRET_KEY:?必须注入}
+      CJX_MULTIMODAL_PROVIDER: ${CJX_MULTIMODAL_PROVIDER:-offline}
+      CJX_MULTIMODAL_API_KEY: ${CJX_MULTIMODAL_API_KEY:-}
+      CJX_MULTIMODAL_BASE_URL: ${CJX_MULTIMODAL_BASE_URL:-}
+      CJX_ASR_PROVIDER: ${CJX_ASR_PROVIDER:-none}
+    volumes:
+      - storage:/data/storage
+    depends_on:
+      - api
+
+  web:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.web
+      args:
+        NEXT_PUBLIC_API_BASE: ${NEXT_PUBLIC_API_BASE:-http://127.0.0.1:8000/api/v1}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
+  redisdata:
+  storage:

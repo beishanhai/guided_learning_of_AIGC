@@ -1,0 +1,102 @@
+.workbench {
+  display: grid;
+  grid-template-columns: minmax(360px, 1.05fr) minmax(320px, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 1080px) {
+  .workbench {
+    grid-template-columns: 1fr;
+  }
+}
+
+.video {
+  max-height: 460px;
+  object-fit: contain;
+}
+
+.timeline {
+  position: relative;
+  height: 46px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.block {
+  position: absolute;
+  top: 4px;
+  height: 36px;
+  border: none;
+  border-radius: 3px;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.88;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  overflow: hidden;
+  min-width: 2px;
+}
+
+.block:hover {
+  opacity: 1;
+  transform: scaleY(1.06);
+  border: none;
+}
+
+.blockLabel {
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.72);
+  font-weight: 700;
+  font-family: var(--mono);
+}
+
+.editBox {
+  margin: 10px 0;
+  padding: 12px;
+  border: 1px solid rgba(79, 140, 255, 0.35);
+  background: var(--accent-soft);
+  border-radius: var(--radius-sm);
+}
+
+.sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.section {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.section h3 {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  text-transform: none;
+  margin-bottom: 6px;
+}
+
+.section p {
+  font-size: 13px;
+  margin: 0 0 6px;
+}
+
+.frames {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.frame {
+  width: 108px;
+  height: 62px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #000;
+}

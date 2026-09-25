@@ -1,0 +1,25 @@
+# HTTPS 反向代理示例（文档 §11：对外只暴露反代，后端与存储保持私有）
+server {
+    listen 443 ssl http2;
+    server_name chai-jing.example.com;
+
+    ssl_certificate     /etc/letsencrypt/live/chai-jing.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/chai-jing.example.com/privkey.pem;
+
+    client_max_body_size 110m;   # 与 CJX_MAX_UPLOAD_BYTES 保持一致
+
+    location /api/ {
+        proxy_pass http://api:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_read_timeout 300s;
+    }
+
+    location /docs { proxy_pass http://api:8000; }
+    location /openapi.json { proxy_pass http://api:8000; }
+
+    location / {
+        proxy_pass http://web:3000;
+        proxy_set_header Host $host;
+    }
+}

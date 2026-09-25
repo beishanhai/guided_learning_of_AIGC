@@ -1,0 +1,60 @@
+.tableScroll {
+  max-height: 520px;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.distributions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.distributions h3 {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.suggestion {
+  border: 1px solid var(--border-strong);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  padding: 12px 14px;
+}
+
+.suggestionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.suggestionAction {
+  grid-column: 1 / -1;
+  border-top: 1px dashed var(--border-strong);
+  padding-top: 8px;
+  color: #cfe0ff;
+}
+
+.stepLabel {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  margin-bottom: 2px;
+}
+
+.evidenceList {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 13px;
+}
+
+.evidenceList li {
+  margin-bottom: 8px;
+}
+
