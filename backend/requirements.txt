@@ -1,0 +1,21 @@
+# 生产依赖（版本已在 M0 环境验证锁定，对应文档 §2.3 依赖清单）
+fastapi==0.141.1
+uvicorn[standard]==0.53.0
+starlette==1.7.0
+pydantic==2.13.5
+pydantic-settings==2.15.0
+SQLAlchemy==2.0.54
+alembic==1.20.0
+python-multipart==0.0.32
+httpx==0.28.1
+PyYAML==6.0.3
+
+# 生产队列（queue_backend=celery 时使用）
+celery==5.6.3
+redis==8.1.0
+
+# S3 兼容私有对象存储（storage_backend=s3 时使用）
+boto3==1.43.101
+
+# 生产数据库驱动（PostgreSQL）
+# psycopg[binary]==3.2.3

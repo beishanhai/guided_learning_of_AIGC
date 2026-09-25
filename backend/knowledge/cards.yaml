@@ -1,0 +1,396 @@
+# 拆镜学 知识卡片库（k1）
+# 内容真源：cards.yaml。加载器：backend/app/learning/knowledge.py（勿改加载器）
+# id 稳定且全库唯一；model 只能引用这里的 id，不能自造。
+version: k1
+reviewer: "内容负责人（待签署）"
+cards:
+  - id: shot_scale_extreme_wide_v1
+    topic: shot_scale
+    title: "大远景与全景：先交代空间，再放人物"
+    content: >-
+      怎么判断：先看人物在画面高度里占多少。人物只有很小一点、环境占去大部分画面，通常算大远景；人物从头到脚完整入画、上下还留有余地，通常算全景。这两类景别把人物放回空间里，让人知道他在哪、和周围是什么关系。可以问自己：遮住人物，画面还能不能看懂这是哪里？能看懂，说明空间交代已经完成。容易失效或犯错：用大远景拍对话，观众看不清表情，只能靠台词；用全景交代细节，观众又要费力寻找重点。如果前后镜头没有更近的景别接住，空间交代容易变成一段没有信息量的空镜。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["shot_scale","extreme_wide","wide","景别"]
+    applicable_intents: ["shot_language"]
+    examples: ["开场用一个全景让观众先认出街道和店铺，再切到人物","人物走到开阔地带时用大远景，交代他所处环境的尺度"]
+    pitfalls: ["整段对话都用大远景，观众只能听到台词而读不到反应","全景之后没有近一点的镜头接住，信息落点不明确"]
+    review_status: reviewed
+  - id: shot_scale_medium_v1
+    topic: shot_scale
+    title: "中景：动作与对话的基准景别"
+    content: >-
+      怎么判断：画面大致切在人物腰部附近，人物占画面高度大约一半。中景能同时保留手势、身体朝向和一部分环境，适合说话、走动、递东西这类动作。判断时可以数一数：镜头里有没有需要看清的手部动作或身体姿态？有，中景能接住；没有，只是上半身说话，换成更近的景别可能更有效。容易失效或犯错：把中景当万能景别，整段都用它，画面缺少远近对比，节奏也显得平；另一种失误是把中景当近景用，指望它承担情绪爆发，但人物脸在画面里偏小，情绪传不到位。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["shot_scale","medium","景别"]
+    applicable_intents: ["shot_language"]
+    examples: ["两人边走边谈，用中景同时看到步态和手势","递交物品时保持中景，让动作完整呈现"]
+    pitfalls: ["整场戏只有中景，远景与近景都缺席，段落缺少层次","把情绪的落点放在中景上，脸部细节不足以支撑"]
+    review_status: reviewed
+  - id: shot_scale_close_up_v1
+    topic: shot_scale
+    title: "中近景与近景：让情绪进入画面"
+    content: >-
+      怎么判断：切在胸口附近算中近景，切在肩部以上、脸部占画面较大比例算近景。判断依据是眼睛和嘴角是否清晰可读：观众能不费力地看到眼神变化，这个景别就已经在承担情绪功能。近景适合一句关键台词、一次犹豫、一次落泪。容易失效或犯错：用近景拍环境信息，观众会丢失空间关系，不知道人物站在哪里；连续多个近景又会让画面缺少呼吸感。切得太早，观众还没建立空间就直接看到脸部，情绪没有铺垫可以依附。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["shot_scale","medium_close","close_up","景别"]
+    applicable_intents: ["shot_language"]
+    examples: ["人物落泪时切近景，让情绪占据画面主体","关键台词说完后保留中近景，记录对方的即时反应"]
+    pitfalls: ["用近景交代场所和方位，观众对空间感到混乱","连续五六个近景连排，画面闷而缺少节奏变化"]
+    review_status: reviewed
+  - id: shot_scale_extreme_close_up_v1
+    topic: shot_scale
+    title: "特写：把注意力锁在局部"
+    content: >-
+      怎么判断：画面只装下一个局部，比如眼睛、手、手机屏幕、杯口。判断标准是：这个局部本身是否携带关键信息，观众看完能不能获得一个新的事实。特写把注意力从空间和动作收缩到细节，常用于揭示线索或强调某个动作的结果。容易失效或犯错：特写用得太频繁，每次都变成强调，强调本身就不再起作用；用特写拍观众已经知道的东西，只是重复信息；特写之后不交代它与整体的关系，观众会不清楚这个局部属于谁、在什么地方。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["shot_scale","extreme_close_up","特写","景别"]
+    applicable_intents: ["shot_language"]
+    examples: ["手指在桌下敲了三下，用特写把线索交给观众","信纸上的落款用特写，替代一句台词"]
+    pitfalls: ["每个镜头都靠特写强调，重点被拉平","特写孤立出现，观众不知道它在哪个空间里"]
+    review_status: reviewed
+  - id: camera_motion_static_v1
+    topic: camera_motion
+    title: "固定镜头：先确认一个不动的基准"
+    content: >-
+      怎么判断：把同一镜头内的若干代表帧并排看，机位和取景范围基本不变，只有人物在动，通常可以判断为固定镜头。固定镜头提供一个稳定基准，观众能清楚看到动作的起止和走位。判断时要区分摄影机不动和画面没变化：人物走近同样会让画面变化量上升。容易失效或犯错：给固定镜头配上很短的时长，观众来不及看清动作；在需要跟随的信息上使用固定镜头，主体容易走出画面。只拿到单帧时，静止和缓慢移动看起来一样，需要连续帧比对。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["camera_motion","static","固定镜头"]
+    applicable_intents: ["shot_language"]
+    examples: ["一人坐在桌前听对方说话，机位不动，让细微表情成为重点","用固定镜头拍摄对称的门框与走位，交代空间结构"]
+    pitfalls: ["固定镜头时长过短，动作还没看清就切走","快门式地连拍固定镜头，段落显得呆板"]
+    review_status: reviewed
+  - id: camera_motion_pan_tilt_v1
+    topic: camera_motion
+    title: "横摇与纵摇：机位不动，视线扫过"
+    content: >-
+      怎么判断：机位大致不动，取景中心沿水平方向扫过是横摇，沿垂直方向扫过是纵摇。判断依据是地平线或建筑边缘的位移方向，以及两端画面能不能拼成一段连续的空间。横摇常用于展示环境或跟随横向移动，纵摇常用于表现高度、上下打量。容易失效或犯错：摇得太快，观众只看到模糊的拖影，读不出扫过的是什么；摇到一半停住又找不到落点，注意力会悬空。只给单帧时，静止画面和摇摄中途的画面看起来一样，需要连续帧才能确认。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["camera_motion","pan","tilt","横摇","纵摇"]
+    applicable_intents: ["shot_language"]
+    examples: ["从空无一人的街道横摇到亮灯的窗口，把环境和信息连起来","人物进门后纵摇到墙上的钟，交代时间"]
+    pitfalls: ["甩摇速度过快，画面只剩拖影，信息没有读出来","摇摄中途停顿又没有落点，观众注意力无处安放"]
+    review_status: reviewed
+  - id: camera_motion_dolly_zoom_v1
+    topic: camera_motion
+    title: "移动与变焦：位移和焦距不是一回事"
+    content: >-
+      怎么判断：画面里近处的物体相对远处的物体发生位移，说明机位在移动；如果远近物体的大小关系基本不变，只是整体被放大或缩小，更像变焦。两者观感不同：移动会改变前后景的相对关系，变焦接近把画面裁切放大。判断时可以盯住前景物体的边缘，看它和背景的相对位置有没有改变。容易失效或犯错：把变焦当成推近使用，背景被一起压平，空间的纵深感反而变弱；移动速度太快，观众先注意到摄影机而不是画面内容。单帧无法区分这两种变化。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["camera_motion","dolly","zoom","移动","变焦"]
+    applicable_intents: ["shot_language"]
+    examples: ["跟着人物穿过走廊移动，前后景关系持续变化","隔着人群缓慢变焦靠近目标，制造逐渐看清的感觉"]
+    pitfalls: ["用快速变焦代替靠近，空间被压平，临场感减弱","只凭一帧判断是移动还是变焦，结论站不住"]
+    review_status: reviewed
+  - id: camera_motion_single_frame_limit_v1
+    topic: camera_motion
+    title: "单帧不能证明运镜：运镜要看连续帧"
+    content: >-
+      怎么判断：运镜是在时间上发生的变化，至少需要同一镜头内两帧以上、而且顺序正确，才能看出位移的方向。只有一张代表帧时，只能描述那一刻的取景，不能证明摄影机在动。手持的抖动通常表现为连续帧之间小幅、无规律的位移，需要看一串帧才能和固定镜头区分开。容易失效或犯错：把画面变化量直接当成运镜证据，主体自身的运动、快速切换、画面内物体的移动都会造成同样的变化；代表帧的间隔太大时，中间的运动被跳过，判断会偏向漏判或误判。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["camera_motion","handheld","shot_motion_evidence","运镜证据","手持"]
+    applicable_intents: ["shot_language","narrative_rhythm"]
+    examples: ["要判断一个镜头是否手持，至少抽取首中尾三帧并对照抖动方向","怀疑有推近时，把同一镜头内多帧按时间排序再确认"]
+    pitfalls: ["看到画面模糊就断言手持，忽略了运动模糊和焦外模糊","代表帧间隔过大，中间发生的运镜被整段跳过"]
+    review_status: reviewed
+  - id: composition_rule_of_thirds_v1
+    topic: composition
+    title: "三分位置：让视线先落在主体上"
+    content: >-
+      怎么判断：把画面横竖各分三等份，主体或视线落点在分割线附近，就是常见的三分位置。判断依据是主体到画面边缘的距离是否明显不对称，以及观众的视线是否先落在主体上。居中构图给人稳定、正视的感觉，偏置构图更容易带出方向感和被观察感。容易失效或犯错：为了对齐分割线而把主体压到边缘，人物像要被挤出画面；主体和背景里的强线条争抢注意力，落点就被冲淡。三分法是参考，不是判断画面好坏的唯一依据。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["composition","rule_of_thirds","构图"]
+    applicable_intents: ["shot_language"]
+    examples: ["人物站在画面左三分之一处，右侧留出他望去的方向","把地平线放在下三分之一，突出天空的开阔"]
+    pitfalls: ["一味追求分割线，主体被顶到边缘，画面失去平衡","背景强线条穿过主体头部，视线落点被干扰"]
+    review_status: reviewed
+  - id: composition_eyeline_space_v1
+    topic: composition
+    title: "视线方向与留白：给目光留出通道"
+    content: >-
+      怎么判断：看人物面朝哪一侧，以及那一侧有没有留出空间。人物看向画面右侧时，右侧留白多一些，观众的视线会顺着他看的方向延伸出去。头顶空间太小显得压抑，太大又显得空，可以对照人物眼睛到画面上沿的距离来判断。容易失效或犯错：人物朝左看却被贴在画面左边缘，视线像撞墙一样没有去处；前后两个镜头里人物朝向和留白方向相反，观众会以为他在看另一边。留白的作用是给视线留通道，不是越空越好。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["composition","eyeline","headroom","视线方向"]
+    applicable_intents: ["shot_language"]
+    examples: ["人物望向窗外时，把留白放在他视线一侧","对话镜头里保持一致的朝向，让观众知道双方在看彼此"]
+    pitfalls: ["朝左看却把人物放在左边缘，视线没有去处","相邻镜头留白方向反复跳变，空间感被破坏"]
+    review_status: reviewed
+  - id: composition_visual_weight_v1
+    topic: composition
+    title: "画面重心与留白：注意力落在哪里"
+    content: >-
+      怎么判断：眯起眼看画面，注意力自然落在哪里，那里就是画面的重心。亮部、高饱和色、人脸、运动中的物体都会加重分量。留白则是画面里相对空的区域，用来衬托主体、制造停顿。判断时可以问：遮住主体后，画面里是否还有一处同样抢眼的东西？有，说明重心被分散了。容易失效或犯错：把留白理解成什么都不放，结果画面空而没有指向；主体太小又贴着边角，观众要花时间寻找，信息传递变慢。多主体同框时，还要看它们的分量有没有排出层次。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["composition","visual_weight","negative_space","留白","画面重心"]
+    applicable_intents: ["shot_language"]
+    examples: ["把亮色道具放在人物视线终点，让重心明确","用大面积阴影留白压住画面，突出孤立的人物"]
+    pitfalls: ["留白处又亮又花，注意力被牵走","主体与背景元素分量相当，观众找不到重点"]
+    review_status: reviewed
+  - id: shot_relation_shot_reverse_shot_v1
+    topic: shot_relation
+    title: "正反打：把对话拆成两个方向"
+    content: >-
+      怎么判断：两个人对话时，镜头在两人之间来回切换，各自被单独取景，通常就是正反打。判断依据是相邻镜头里人物的朝向大致相反、彼此在画面中被安排在对侧，观众因此能拼出两人面对面的空间。正反打适合把注意力和台词交给其中一方。容易失效或犯错：两个机位都偏离轴线到了同一侧，观众会觉得两人看着同一个方向而不是对视；切换时景别差异太大，会显得突兀。若中间插入与对话无关的镜头，来回切换的连贯感会被打断。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["shot_relation","shot_reverse_shot","正反打"]
+    applicable_intents: ["shot_language"]
+    examples: ["一问一答的对话用正反打，台词和反应都有落点","争执升级时缩短单侧镜头时长，加快来回切换"]
+    pitfalls: ["两侧机位落在轴线同一侧，人物看起来没有对视","正反打两侧景别相差过大，切换时显得跳跃"]
+    review_status: reviewed
+  - id: shot_relation_eyeline_match_v1
+    topic: shot_relation
+    title: "视线匹配：让看与所看对得上"
+    content: >-
+      怎么判断：前一镜头里人物抬头或转头看向画外，后一镜头出现他看的东西，两处的视线高度和左右方向大致对应，就形成了视线匹配。判断时可以核对两点：看向的方向和之后出现的对象方位是否一致，视线的高度是否落在合理的位置。容易失效或犯错：人物往上看向天花板，下一个镜头却是平视的物品，观众会以为他在看别的东西；中间插入过多镜头，视线衔接被稀释。视线匹配靠的是方位对应，不是内容相似。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["shot_relation","eyeline_match","视线匹配"]
+    applicable_intents: ["shot_language"]
+    examples: ["人物抬头看向画外，下一镜头接树上的一只鸟","两个人先后看向画外同一方向，暗示他们在看同一样东西"]
+    pitfalls: ["视线高度不匹配，观众误以为在看别处","目光与对象之间插入太多镜头，联系被冲淡"]
+    review_status: reviewed
+  - id: shot_relation_crossing_axis_v1
+    topic: shot_relation
+    title: "越轴：左右关系为什么会突然对调"
+    content: >-
+      怎么判断：在两人或双方关系的场景里，先找到连接他们的那条想象线，也就是轴线。同一段落里机位停留在轴线同侧，人物的左右关系保持稳定；如果跨到另一侧，两人在画面里的左右位置就互换，这属于越轴。越轴本身不算错误，只是会让观众短暂迷失方向。判断时看人物在画面中的左右位置是否突然对调。容易失效或犯错：没有必要时越轴，观众会以为空间变了；确实要越轴时，中间没有用一个过渡镜头或移动镜头交代机位变化，空间关系就断了。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["shot_relation","axis_line","crossing_the_axis","越轴"]
+    applicable_intents: ["shot_language"]
+    examples: ["用一段横摇穿过轴线，把两人位置的自然变化交代清楚","先拍一个中性方向的环境镜头，再切到轴线另一侧"]
+    pitfalls: ["在对话中无故越轴，观众以为换了场地","越轴前没有过渡镜头，左右关系对调得莫名其妙"]
+    review_status: reviewed
+  - id: color_temperature_warm_cool_v1
+    topic: color_temperature
+    title: "冷暖色调：同一场景也能有两种温度"
+    content: >-
+      怎么判断：看画面整体偏黄橙还是偏青蓝。偏黄橙的暖调让画面显得靠近、有温度；偏青蓝的冷调容易显得疏离、冷静。判断时可以观察人脸和白色物体在画面里偏向哪一端，再对照环境色的整体倾向；同一场景里的冷暖对比还能分出前后景。容易失效或犯错：把冷色直接等同于悲伤、暖色等同于开心，会忽略画面里具体发生了什么；多种强色光同时出现时，色偏判断会失准。屏幕校准、自动白平衡和后期调色都会影响肉眼判断，单帧结论只说明这一帧的倾向。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["color_temperature","warm_tone","cool_tone","冷暖色调"]
+    applicable_intents: ["shot_language"]
+    examples: ["清晨的窗光偏冷，室内台灯偏暖，用对比分出内外","同一间屋子在夜戏里压成冷调，交代时间与心境变化"]
+    pitfalls: ["把冷调一律解读成负面情绪，忽略了剧情内容","在不同设备上看同一帧，冷暖感受不一致却照旧下结论"]
+    review_status: reviewed
+  - id: color_temperature_light_direction_v1
+    topic: color_temperature
+    title: "光线方向：亮面与暗面决定空间层次"
+    content: >-
+      怎么判断：看人脸或主体上的亮面与暗面。光从正面来，阴影少而平；从侧面来，脸一半亮一半暗，立体感更强；从背面来，主体容易变成剪影，轮廓突出。判断时可以找影子落下的方向，影子的反方向大致就是光源方向。容易失效或犯错：把主体自身的明暗当成光源方向，如果主体本身颜色深浅差别大，判断会偏；高对比的逆光画面里细节可能已经丢失，只能看到轮廓。光线方向会影响画面的空间层次，但同一方向在不同场景里的感受并不固定。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["color_temperature","light_direction","光线方向"]
+    applicable_intents: ["shot_language"]
+    examples: ["侧面光打在人物脸上，交代他正站在窗前","逆光让人物只剩轮廓，配合环境交代黄昏"]
+    pitfalls: ["依据主体固有明暗判断光源，忽略了反光板补光","逆光细节丢失后仍按普通镜头解读表情"]
+    review_status: reviewed
+  - id: rhythm_average_shot_length_v1
+    topic: rhythm
+    title: "平均镜头时长：一个粗略的节奏基准"
+    content: >-
+      怎么判断：把整段的镜头按时间顺序列出时长，加总后除以镜头数，得到平均镜头时长。它提供一个粗略的基准：多数镜头明显短于这个数，段落偏快；明显长于，段落偏慢。更有用的是看单个镜头相对基准的位置。容易失效或犯错：平均值会被个别长镜头或极短镜头拉偏，中位数和时长分布比平均值更稳妥；镜头数量太少时，平均值没有代表性。只看平均值还会掩盖一会儿快切、一会儿长停的强烈波动。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["rhythm","average_shot_length","平均镜头时长"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["先算出平均时长，再标出明显偏离基准的几个镜头","同一段里对比前半段和后半段的平均时长变化"]
+    pitfalls: ["只用平均值描述整段节奏，忽略内部波动","镜头总数很少时直接引用平均值下结论"]
+    review_status: reviewed
+  - id: rhythm_cut_frequency_v1
+    topic: rhythm
+    title: "切镜频率：变化点比总数更有信息"
+    content: >-
+      怎么判断：把切点密集的几秒和稀疏的几秒分别标出来，比较单位时间内的切镜次数。切点突然变密，通常对应信息集中或情绪紧张；切点变疏，通常是停留和积累。判断时可以留意声音是否同步变密，音画同步的变化往往更明显。容易失效或犯错：把整段的切镜频率压成一个数，会看不到变化发生在哪一分钟；快速摇镜和画面内的强运动也会让人误以为切换很多。统计切点时以画面实切为准，不要只凭感觉。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["rhythm","cut_rate","切镜频率"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["把切点时间轴画出来，找密度突变的区间","对照配乐的重音位置，看切点是否随之加密"]
+    pitfalls: ["凭观看印象估算切镜次数，与实际切点对不上","把摇镜和画面内运动计入切点，频率被高估"]
+    review_status: reviewed
+  - id: shot_duration_reaction_shot_v1
+    topic: shot_duration
+    title: "反应镜头的时长：给表情多少时间"
+    content: >-
+      怎么判断：人物说完话或事件发生后，镜头仍停在他脸上，这一小段就是反应镜头。判断依据是这段时间里没有新的动作和信息，只有表情变化。反应镜头的长度决定观众有多少时间进入人物状态：短一点偏干脆，长一点偏回味。容易失效或犯错：反应镜头太短，观众来不及读到表情，等于没有；太长又没有新的信息，注意力会散。判断时要看表情是否在变化，如果整段时间表情基本不变，就属于拖延。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["shot_duration","reaction_shot","镜头时长"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["对方说完狠话后保留两秒反应镜头，让情绪落地","在快速段落里把反应镜头压到半秒，保持推进感"]
+    pitfalls: ["反应镜头不足半秒，表情还没读到就切走","表情不再变化却继续停留，段落被拖慢"]
+    review_status: reviewed
+  - id: shot_duration_long_take_v1
+    topic: shot_duration
+    title: "长镜头：停留的价值要看新增信息"
+    content: >-
+      怎么判断：一个镜头持续较长时间，中间不切，通常还伴随人物走位或摄影机运动。判断依据是它是否在同一空间里连续推进信息，还是只是在等。长镜头让观众自己选择看什么，也保留时间和空间的连续感。容易失效或犯错：内容密度不够时，长镜头会显得拖；画面里没有层次和变化时，观众容易走神。看到长镜头不要只统计秒数，还要记录这段时间里新增了哪些信息，才能判断它是积累还是空转。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["shot_duration","long_take","长镜头"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["让人物在长镜头里穿过几个房间，一次交代完整空间","用长镜头记录一段完整的动作过程，保留真实时间感"]
+    pitfalls: ["长镜头里没有新增信息，观众注意力流失","只按秒数判断镜头价值，忽略空间是否持续变化"]
+    review_status: reviewed
+  - id: pacing_curve_segment_division_v1
+    topic: pacing_curve
+    title: "段落划分：先有分段才有节奏曲线"
+    content: >-
+      怎么判断：按地点、时间或人物关系的变化，把片子切成若干段落，再把每段的平均镜头时长和镜头数排成一列，就得到粗略的节奏曲线。段落边界通常出现在空间跳转、音乐变化或字幕出现的位置。容易失效或犯错：段落切得太细，每段只有一两个镜头，曲线会变成噪声；切得太粗，节奏变化被平均掉，看不出起伏。划分段落以实际内容变化为准，不要为了得到漂亮的曲线而硬切。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["pacing_curve","segment","段落划分"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["按场景转换把一段片子分成四个段落，分别统计时长","对照音乐段落给视频分块，再比较各块的切镜密度"]
+    pitfalls: ["为了曲线好看硬切段落，同一场景被拆开","段落跨度过大，前后节奏差异被平均掉"]
+    review_status: reviewed
+  - id: pacing_curve_rise_fall_v1
+    topic: pacing_curve
+    title: "节奏曲线的升降与拐点"
+    content: >-
+      怎么判断：把每段的镜头平均时长按顺序连成折线，线向下走表示切得更快、节奏更紧，向上走表示停留变多。再对照段落的音量和动作强度，就能看出这段是上升、回落还是平稳。判断依据是曲线有没有明显拐点，拐点出现在哪个事件前后。容易失效或犯错：把越来越快当成好节奏，长期加速会让观众疲劳；曲线一直平说明缺少变化，但不等于内容有问题。曲线只是记录，还要回到具体内容解释拐点。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["pacing_curve","tension_curve","节奏曲线"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["标出曲线由升转降的位置，核对那里发生了什么事件","把音量和切镜密度画在一起，看两条线是否同步"]
+    pitfalls: ["默认加速就是更好，忽略观众承受度","曲线平直就判定内容失败，不看题材差异"]
+    review_status: reviewed
+  - id: pacing_curve_information_release_v1
+    topic: pacing_curve
+    title: "信息释放顺序：观众先知道什么"
+    content: >-
+      怎么判断：把每个镜头新增的事实写下来，看这些信息是依次出现还是同时给出。判断依据是观众需要先知道哪一件事，才能理解后面的镜头，这个顺序就是信息链。常见做法是先给一个问题，再逐步补上条件。容易失效或犯错：把结论放在铺垫之前，观众会感觉突然；关键信息放在画面角落又停留太短，观众接不住。同一个信息在多个镜头里反复出现时，要判断它是强调还是冗余。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["pacing_curve","information_release","信息释放顺序"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["先拍到空房间，再拍到桌上的钥匙，最后才拍人物进门","把关键线索放在第三次出现时才点明，形成递进"]
+    pitfalls: ["结论先于铺垫，观众觉得转折生硬","关键信息一闪而过，观众来不及读取"]
+    review_status: reviewed
+  - id: narrative_function_establish_introduce_v1
+    topic: narrative_function
+    title: "建立环境与引入主体：先给场再给人"
+    content: >-
+      怎么判断：看这个镜头在交代这是哪里、什么时候，还是把注意力引到某个具体人物或物体上。前者是建立环境，景别通常偏大、画面信息较杂；后者是引入主体，通常有明确的中心对象，或用运动、视线把注意引过去。判断时可以问：这个镜头播完之后，观众新知道了什么？容易失效或犯错：环境镜头里塞太多细节，观众记不住重点；引入主体时没有给够时间，观众还没看清就切走。两个功能挤在一个镜头里时，信息容易互相干扰。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["narrative_function","establish","introduce_subject","叙事功能"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["开场用一个街景把城市和季节交代清楚，再引出主角","让镜头顺着人流移动，最后停在主角身上完成引入"]
+    pitfalls: ["环境镜头信息过载，观众抓不住重点","主体刚入画就切换，观众没看清是谁"]
+    review_status: reviewed
+  - id: narrative_function_develop_v1
+    topic: narrative_function
+    title: "推进信息：删掉它会不会接不上"
+    content: >-
+      怎么判断：镜头里出现新的动作结果、新的对话内容或新的关系变化，说明它在推进信息。判断依据是把它删掉以后，后面的镜头还能不能无缝接上；接不上，说明它承担了推进作用。推进镜头的节奏通常跟随信息量，而不是跟随情绪。容易失效或犯错：把重复交代已有信息的镜头当成推进镜头，段落就会显得拖；推进镜头画面信息太满，观众来不及读取。判断时要区分发生了新事情和只是换了角度看同一件事。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["narrative_function","develop","推进信息","叙事功能"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["角色拿到车票的镜头，删掉后下一场没法解释他为何出发","一句话交代新条件的镜头，用短时长快速带过"]
+    pitfalls: ["把回看同一场景的镜头当作推进，段落变拖","推进镜头里同时塞入多个新信息，观众漏读"]
+    review_status: reviewed
+  - id: narrative_function_emphasis_transition_v1
+    topic: narrative_function
+    title: "情绪强调与转场过渡的位置"
+    content: >-
+      怎么判断：情绪强调通常出现在事件之后，用更近的景别、更长的停留或声音的加强来放大反应；转场过渡负责连接两个空间或时间，常出现在段落边界，用环境镜头、空镜或明显的画面处理来分隔。判断依据是它紧接在什么之后、后面接着什么。容易失效或犯错：把情绪强调放在事件之前，观众还没有情绪可以放大；转场镜头过长，会打断节奏；段落内部频繁使用转场手法，会让结构显得松散。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["narrative_function","emphasize_emotion","transition","情绪强调","转场过渡"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["争吵结束后用一个近景长停，把情绪放大后再转场","在段落转换处插入一个空镜，交代时间流逝"]
+    pitfalls: ["情绪强调出现在事件之前，铺垫落空","段落内部频繁叠化，节奏被反复打断"]
+    review_status: reviewed
+  - id: transition_hard_cut_v1
+    topic: transition
+    title: "硬切：默认的衔接方式"
+    content: >-
+      怎么判断：两个镜头之间没有过渡效果，画面直接跳变，就是硬切。它常见于同一空间内连续动作或对话的衔接，观众几乎不会注意到切换。判断依据是切点前后人物位置、动作阶段是否连续。容易失效或犯错：在同一动作的中途切换时，如果动作没有接上，会出现跳跃感；在时间或空间跨度大的地方直接用硬切，观众可能一时分不清发生了什么。硬切用得很多，问题往往不在硬切本身，而在切点选得好不好。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["transition","hard_cut","硬切"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["人物伸手拿杯子的动作分两拍硬切，形成顺畅的省略","对话来回使用硬切，保持节奏紧凑"]
+    pitfalls: ["动作中途硬切且姿态对不上，出现跳帧感","跨越长时间的地方直接硬切，观众分不清时间"]
+    review_status: reviewed
+  - id: transition_dissolve_fade_v1
+    topic: transition
+    title: "叠化与渐变：留给时间与段落的过渡"
+    content: >-
+      怎么判断：两个画面短暂重叠、逐渐过渡是叠化；画面逐渐变黑或变白再出现新画面是渐隐渐显。它们通常表示时间流逝、空间转移或段落结束。判断依据是过渡的时长和它出现的位置是否在段落边界上。容易失效或犯错：叠化用得太频繁，会显得拖沓，也会削弱时间跳跃的干净感；在快节奏段落里插入渐变，节奏会被打断。叠化容易带来柔和、怀旧的感受，但具体效果仍要看前后内容。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["transition","dissolve","fade","叠化"]
+    applicable_intents: ["narrative_rhythm"]
+    examples: ["用两秒叠化表示人物从小时候过渡到成年","段落结尾渐隐到黑，再渐显新场景，明确划分章节"]
+    pitfalls: ["短场次之间也反复叠化，段落边界失去分量","快切段落中插入渐变，节奏被硬生生打断"]
+    review_status: reviewed
+  - id: shot_motion_evidence_frame_difference_v1
+    topic: shot_motion_evidence
+    title: "画面变化量：它描述的只是变化多少"
+    content: >-
+      怎么判断：把同一镜头里相邻的代表帧做像素对比，得到一个平均差值，数值越大说明两帧之间画面变化越多。它只描述画面变了多少，不说明是什么在变。判断时要把它和帧的时间间隔一起看：间隔越长，变化量自然越大。容易失效或犯错：把变化量直接读成运镜，主体走动、光线变化、快速切换都会让它升高；变化量接近零也可能只是抽样太少，不能据此判断镜头静止。这个指标适合用来筛选可疑镜头，不适合单独下结论。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["shot_motion_evidence","frame_difference","画面变化量"]
+    applicable_intents: ["shot_language","narrative_rhythm"]
+    examples: ["先用变化量挑出波动大的镜头，再回到连续帧人工核对","对照代表帧的间隔时间，解释变化量为何不同"]
+    pitfalls: ["把变化量高直接写成有运镜，忽略主体自身运动","变化量低就判定画面静止，忽略抽样密度不足"]
+    review_status: reviewed
+  - id: shot_motion_evidence_limits_v1
+    topic: shot_motion_evidence
+    title: "画面变化量的局限：指标是线索，不是结论"
+    content: >-
+      怎么判断：遇到画面变化量偏大或偏小的镜头，先回到原始帧序列核对，确认变化发生在画面的哪个区域、持续了多久。判断依据是变化有没有稳定方向、是否覆盖整幅画面：变化集中在人物身上，更可能是主体运动；整幅画面一起平移，才更接近摄影机运动。容易失效或犯错：只用帧差数值排序，会把内容重要的慢镜头和内容空洞的快镜头排在一起；不同分辨率、不同压缩质量的素材之间，变化量数值不能直接比较。指标是线索，结论要靠连续帧和具体内容支撑。
+    source: "影视镜头语言通用教材与公开课程共识，由内容负责人审校"
+    reviewer: "内容负责人（待签署）"
+    version: k1
+    tags: ["shot_motion_evidence","observation_limit","观察指标","局限性"]
+    applicable_intents: ["shot_language","narrative_rhythm"]
+    examples: ["把变化量分区域统计，看主要集中在画面中央还是边缘","同一条素材内横向比较各镜头的变化量，不跨素材比"]
+    pitfalls: ["跨不同分辨率的素材比较变化量数值，结论失真","只看数值排序，忽略镜头里实际发生了什么"]
+    review_status: reviewed

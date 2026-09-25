@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>拆镜学 · 简版演示</title>
+<style>
+  :root { --bg:#0d1117; --panel:#161b22; --line:#263041; --fg:#e6edf3; --muted:#8b98a9;
+          --accent:#4c8dff; --ok:#3fb950; --warn:#d29922; --err:#f85149; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:14px/1.7 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif; }
+  header { padding:14px 20px; border-bottom:1px solid var(--line); display:flex;
+           align-items:center; gap:14px; flex-wrap:wrap; background:var(--panel); }
+  h1 { font-size:16px; margin:0; }
+  h2 { font-size:14px; margin:0 0 8px; color:var(--fg); }
+  .muted { color:var(--muted); font-size:12.5px; }
+  main { padding:18px 20px 80px; max-width:1180px; margin:0 auto; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:10px;
+           padding:14px 16px; margin-bottom:14px; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:7px;
+           padding:7px 13px; cursor:pointer; font-size:13px; }
+  button.ghost { background:#21262d; border:1px solid var(--line); color:var(--fg); }
+  button:disabled { opacity:.45; cursor:not-allowed; }
+  input, textarea, select { background:#0d1117; color:var(--fg); border:1px solid var(--line);
+           border-radius:7px; padding:7px 9px; font-size:13px; font-family:inherit; }
+  input[type=file] { padding:5px; }
+  table { border-collapse:collapse; width:100%; font-size:13px; }
+  th,td { border-bottom:1px solid var(--line); padding:6px 8px; text-align:left; }
+  th { color:var(--muted); font-weight:500; }
+  .badge { display:inline-block; padding:1px 8px; border-radius:999px; font-size:12px;
+           background:#21262d; border:1px solid var(--line); }
+  .badge.ok { color:var(--ok); border-color:#1f6f34; }
+  .badge.warn { color:var(--warn); border-color:#7a5c12; }
+  .badge.err { color:var(--err); border-color:#8b2b26; }
+  .timeline { display:flex; gap:2px; height:46px; margin:8px 0 4px; }
+  .seg { background:#1f6feb; border-radius:3px; cursor:pointer; position:relative;
+         min-width:3px; opacity:.85; }
+  .seg:hover { opacity:1; outline:2px solid #fff3; }
+  .shot { border:1px solid var(--line); border-radius:9px; padding:11px 13px; margin-bottom:10px;
+          background:#11161d; cursor:pointer; }
+  .shot.active { border-color:var(--accent); }
+  .shot h3 { margin:0 0 6px; font-size:13.5px; }
+  .kv { margin:3px 0; }
+  .kv b { color:var(--muted); font-weight:500; }
+  .ev { color:var(--accent); cursor:pointer; text-decoration:underline dotted; margin-right:8px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:900px) { .grid2 { grid-template-columns:1fr; } }
+  video { width:100%; background:#000; border-radius:8px; border:1px solid var(--line); }
+  pre { background:#0d1117; border:1px solid var(--line); border-radius:8px; padding:10px;
+        overflow:auto; font-size:12px; max-height:280px; }
+  .log { font-family:Consolas,monospace; font-size:12px; color:var(--muted);
+         max-height:150px; overflow:auto; white-space:pre-wrap; }
+  .steps span { display:inline-block; padding:3px 10px; margin-right:6px; border-radius:999px;
+                background:#21262d; border:1px solid var(--line); font-size:12px; color:var(--muted); }
+  .steps span.on { color:#fff; border-color:var(--accent); background:#1f6feb33; }
+  .steps span.done { color:var(--ok); border-color:#1f6f34; background:#1f6f3422; }
+</style>
+</head>
+<body>
+<header>
+  <h1>拆镜学 · 简版演示</h1>
+  <span class="muted" id="meta">加载中…</span>
+  <span style="flex:1"></span>
+  <span class="muted" id="who"></span>
+</header>
+
+<main>
+  <div class="panel">
+    <h2>0 · 登录与上传</h2>
+    <div class="row">
+      <input id="subject" value="alice" size="8" />
+      <input id="password" type="password" value="alice-pass-123" size="14" />
+      <button onclick="doLogin()">登录</button>
+      <button class="ghost" onclick="createProject()">新建项目</button>
+      <span class="muted" id="token-info"></span>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <input type="file" id="file" accept="video/mp4,video/quicktime" />
+      <select id="intentSel">
+        <option value="shot_language">学习目标：镜头语言</option>
+        <option value="narrative_rhythm">学习目标：叙事节奏</option>
+      </select>
+      <label class="muted"><input type="checkbox" id="genTask" checked /> 同时生成学习任务</label>
+      <button onclick="uploadAndAnalyze()">上传并拆解</button>
+    </div>
+    <div class="muted" style="margin-top:6px" id="uploadHint">
+      上传前请先在「快速开始」里生成合成样片：samples/dev/fastcut_20s.mp4
+    </div>
+    <div class="steps" id="steps" style="margin-top:10px"></div>
+    <div class="log" id="log"></div>
+  </div>
+
+  <div class="panel" id="workbench" style="display:none">
+    <div class="row">
+      <h2 style="margin:0">1 · 拆解工作台</h2>
+      <span class="muted" id="analysis-meta"></span>
+      <span style="flex:1"></span>
+      <button class="ghost" onclick="switchIntent('shot_language')">看镜头语言</button>
+      <button class="ghost" onclick="switchIntent('narrative_rhythm')">看叙事节奏</button>
+      <button class="ghost" onclick="exportMd()">导出 Markdown</button>
+    </div>
+    <div class="grid2" style="margin-top:12px">
+      <div>
+        <video id="player" controls preload="metadata"></video>
+        <div class="muted" id="playerHint" style="margin-top:6px"></div>
+      </div>
+      <div>
+        <h2>结构指标</h2>
+        <table id="metrics"></table>
+        <h2 style="margin-top:12px">镜头时间线（点击跳转）</h2>
+        <div class="timeline" id="timeline"></div>
+        <div class="muted" id="timelineHint"></div>
+        <h2 style="margin-top:12px">未知与提示</h2>
+        <div class="muted" id="unknowns"></div>
+      </div>
+    </div>
+    <h2 style="margin-top:16px">镜头逐条拆解</h2>
+    <div id="shots"></div>
+  </div>
+
+  <div class="panel" id="taskPanel" style="display:none">
+    <div class="row">
+      <h2 style="margin:0">2 · 学习任务</h2>
+      <span style="flex:1"></span>
+      <button class="ghost" onclick="makeTask('imitate')">模仿</button>
+      <button class="ghost" onclick="makeTask('variant')">变体</button>
+      <button class="ghost" onclick="makeTask('original')">原创</button>
+    </div>
+    <div id="task"></div>
+    <h2 style="margin-top:14px">3 · 提交作品并获取结构反馈</h2>
+    <div class="row">
+      <input type="file" id="subFile" accept="video/mp4,video/quicktime" />
+      <button onclick="submitWork()">提交作业</button>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <input id="reason" placeholder="创作说明（为什么这样安排镜头）" style="flex:1;min-width:260px" />
+    </div>
+    <textarea id="storyboard" rows="4" style="width:100%;margin-top:8px"
+      placeholder="可选：文字分镜，例如&#10;镜头1：全景，3秒，为了交代环境。&#10;镜头2：近景，2秒。"></textarea>
+    <div id="feedback"></div>
+  </div>
+</main>
+
+<footer style="max-width:1180px;margin:0 auto 40px;padding:14px 20px 0;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:flex;gap:8px;flex-wrap:wrap">
+  <span>拆镜学 · 简版演示</span><span style="opacity:.45">|</span>
+  <span>许可 AGPL-3.0（不提供担保，分析结果不构成版权判定）</span><span style="opacity:.45">|</span>
+  <a id="sourceLink" style="color:inherit;text-decoration:underline dotted" target="_blank" rel="noopener">获取源代码</a>
+</footer>
+
+<script>
+// AGPL-3.0 第 13 条：通过网络与之交互的用户必须能获得对应源码。部署时请改成你的仓库地址。
+var SOURCE_URL = "https://github.com/your-org/chai-jing-xue";
+var API = (location.origin || "http://127.0.0.1:8000") + "/api/v1";
+var TOKEN = "";
+var PROJECT_ID = "";
+var ASSET_ID = "";
+var ANALYSIS = null;
+var TASK = null;
+
+function el(id) { return document.getElementById(id); }
+function log(msg, cls) {
+  var box = el("log");
+  box.textContent = "[" + new Date().toLocaleTimeString() + "] " + msg + "\n" + box.textContent;
+}
+function esc(s) {
+  return String(s === null || s === undefined ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+function badges(items) {
+  return items.map(function (t) { return '<span class="badge">' + esc(t) + "</span>"; }).join(" ");
+}
+
+async function api(path, opts) {
+  opts = opts || {};
+  var headers = opts.headers || {};
+  if (TOKEN) headers["Authorization"] = "Bearer " + TOKEN;
+  if (opts.json !== undefined) {
+    headers["Content-Type"] = "application/json";
+    opts.body = JSON.stringify(opts.json);
+  }
+  var res = await fetch(API + path, { method: opts.method || "GET", headers: headers, body: opts.body });
+  var text = await res.text();
+  var body = null;
+  try { body = text ? JSON.parse(text) : null; } catch (e) { body = { raw: text }; }
+  if (!res.ok) {
+    var msg = (body && (body.message || body.code)) || res.status;
+    throw new Error(res.status + " " + msg);
+  }
+  return body;
+}
+
+async function loadMeta() {
+  var meta = await api("/meta");
+  el("meta").textContent = "模型: " + meta.providers.multimodal
+    + (meta.providers.multimodal === "offline" ? "（离线确定性分析：景别/运镜保持未知）" : "")
+    + " · 知识卡片 " + meta.knowledge_card_count + " 张"
+    + " · 上传上限 " + Math.round(meta.limits.max_upload_bytes / 1048576) + "MB"
+    + " · 时长 " + (meta.limits.min_duration_ms / 1000) + "—" + (meta.limits.max_duration_ms / 1000) + " 秒";
+}
+
+async function doLogin() {
+  try {
+    var body = await api("/auth/login", {
+      method: "POST",
+      json: { subject: el("subject").value, password: el("password").value }
+    });
+    TOKEN = body.access_token;
+    el("who").textContent = "已登录：" + body.user.subject;
+    el("token-info").textContent = "令牌 " + Math.round(body.expires_in / 3600) + " 小时有效";
+    log("登录成功：" + body.user.subject);
+  } catch (e) { log("登录失败：" + e.message); }
+}
+
+async function createProject() {
+  try {
+    var p = await api("/projects", { method: "POST", json: { title: "演示项目 " + new Date().toLocaleString() } });
+    PROJECT_ID = p.id;
+    log("项目已创建：" + p.id);
+  } catch (e) { log("创建项目失败：" + e.message); }
+}
+
+function renderSteps(names, state) {
+  el("steps").innerHTML = names.map(function (n, i) {
+    var cls = state[i] === "on" ? "on" : (state[i] === "done" ? "done" : "");
+    return '<span class="' + cls + '">' + esc(n) + "</span>";
+  }).join("");
+}
+
+async function uploadAndAnalyze() {
+  var file = el("file").files[0];
+  if (!file) { log("请先选择视频文件"); return; }
+  try {
+    if (!PROJECT_ID) await createProject();
+    renderSteps(["上传票据", "上传文件", "服务端校验", "拆解分析"], ["on", "", "", ""]);
+    var ticket = await api("/projects/" + PROJECT_ID + "/uploads", {
+      method: "POST",
+      json: { filename: file.name, size_bytes: file.size, media_type: file.type || "video/mp4" }
+    });
+    ASSET_ID = ticket.asset_id;
+    log("票据已签发，开始上传 " + Math.round(file.size / 1048576 * 10) / 10 + "MB");
+    var putUrl = ticket.upload_url.charAt(0) === "/" ? location.origin + ticket.upload_url : ticket.upload_url;
+    var put = await fetch(putUrl, { method: "PUT", body: file, headers: { "Content-Type": file.type || "video/mp4" } });
+    if (!put.ok) {
+      var t = await put.text();
+      throw new Error("上传失败 " + put.status + " " + t.slice(0, 200));
+    }
+    renderSteps(["上传票据", "上传文件", "服务端校验", "拆解分析"], ["done", "done", "on", ""]);
+    var check = await api("/assets/" + ASSET_ID + "/complete", { method: "POST" });
+    log("媒体验证通过：" + check.asset.width + "x" + check.asset.height + " · "
+      + Math.round(check.asset.duration_ms / 100) / 10 + "s · " + check.asset.video_codec
+      + " · " + (check.asset.has_audio ? "有音轨" : "无音轨"));
+
+    renderSteps(["上传票据", "上传文件", "服务端校验", "拆解分析"], ["done", "done", "done", "on"]);
+    var job = await api("/projects/" + PROJECT_ID + "/analyses", {
+      method: "POST",
+      headers: { "Idempotency-Key": "demo-" + ASSET_ID },
+      json: {
+        asset_id: ASSET_ID,
+        intent: el("intentSel").value,
+        generate_task: el("genTask").checked
+      }
+    });
+    await pollJob(job.job_id);
+    renderSteps(["上传票据", "上传文件", "服务端校验", "拆解分析"], ["done", "done", "done", "done"]);
+  } catch (e) {
+    log("流程中断：" + e.message);
+  }
+}
+
+async function pollJob(jobId) {
+  for (var i = 0; i < 600; i++) {
+    var job = await api("/jobs/" + jobId);
+    log("任务 " + job.status + " / " + job.stage + " · 进度 " + job.progress + "%"
+      + (job.partial ? "（部分结果）" : ""));
+    if (job.status === "succeeded" || job.status === "failed" || job.status === "cancelled") {
+      if (job.status !== "succeeded") {
+        throw new Error("任务 " + job.status + "：" + (job.error_code || "") + " " + (job.error_message || ""));
+      }
+      if (job.result_type === "analysis") {
+        await loadAnalysis(job.result_id);
+      } else if (job.result_type === "feedback") {
+        await loadFeedback(job.result_id);
+      }
+      return job;
+    }
+    await new Promise(function (r) { setTimeout(r, 1500); });
+  }
+  throw new Error("任务超时");
+}
+
+async function loadAnalysis(id) {
+  ANALYSIS = await api("/analyses/" + id);
+  el("workbench").style.display = "";
+  el("taskPanel").style.display = "";
+  var a = ANALYSIS;
+  el("player").src = originUrl(a.media_playback_url || "");
+  el("analysis-meta").textContent = "v" + a.version + " · " + a.status
+    + " · 生成方式 " + (a.coverage.provider || "-")
+    + " · 镜头 " + a.shots.length + " 个 · " + (a.coverage.frames_truncated ? "代表帧覆盖不足" : "覆盖完整");
+
+  var m = a.metrics;
+  el("metrics").innerHTML = [
+    ["镜头数", m.shot_count],
+    ["平均镜头时长", (m.shot_duration_mean_ms / 1000).toFixed(1) + " s"],
+    ["最长 / 最短", (m.shot_duration_max_ms / 1000).toFixed(1) + " / " + (m.shot_duration_min_ms / 1000).toFixed(1) + " s"],
+    ["切镜频率", m.cut_rate_per_minute + " 次/分"],
+    ["景别分布", Object.keys(m.scale_distribution).filter(function (k) { return m.scale_distribution[k]; })
+      .map(function (k) { return k + "×" + m.scale_distribution[k]; }).join("、")],
+    ["未知景别", m.scale_unknown_count + " 个（单独统计）"]
+  ].map(function (r) {
+    return "<tr><th>" + esc(r[0]) + "</th><td>" + esc(r[1]) + "</td></tr>";
+  }).join("");
+
+  var total = a.media.duration_ms || 1;
+  el("timeline").innerHTML = a.shots.map(function (s, i) {
+    var w = Math.max(0.6, (s.end_ms - s.start_ms) / total * 100);
+    return '<div class="seg" style="width:' + w.toFixed(3) + '%" title="'
+      + esc(s.shot_ref + " " + (s.start_ms / 1000).toFixed(2) + "s") + '" onclick="seekTo(' + s.start_ms + ',' + i + ')"></div>';
+  }).join("");
+  el("timelineHint").textContent = "总时长 " + (total / 1000).toFixed(1) + "s；点击色块或证据时间点跳转（目标误差 ≤0.3 秒）";
+
+  el("unknowns").innerHTML = (a.unknowns.items || []).map(function (u) { return "· " + esc(u); }).join("<br>")
+    + "<br>· " + esc(a.unknowns.policy || "");
+  renderShots(a.shots);
+}
+
+function originUrl(u) { return u && u.charAt(0) === "/" ? location.origin + u : u; }
+
+function seekTo(ms, idx) {
+  var v = el("player");
+  v.currentTime = ms / 1000;
+  v.play().catch(function () {});
+  var nodes = document.querySelectorAll(".shot");
+  for (var i = 0; i < nodes.length; i++) nodes[i].classList.toggle("active", i === idx);
+}
+
+function renderShots(shots) {
+  el("shots").innerHTML = shots.map(function (s, i) {
+    var ev = (s.evidence || []).map(function (e) {
+      return '<span class="ev" onclick="seekTo(' + e.timestamp_ms + "," + i + ')">@'
+        + (e.timestamp_ms / 1000).toFixed(2) + "s " + esc(e.frame_id) + "</span>";
+    }).join("");
+    var know = (s.knowledge || []).map(function (k) {
+      return "<div class='kv'><b>知识卡片</b> " + esc(k.id) + " — " + esc(k.title)
+        + "<div class='muted'>" + esc(k.content) + "</div></div>";
+    }).join("");
+    return '<div class="shot" id="shot-' + i + '">'
+      + "<h3>" + esc(s.shot_ref) + " · " + (s.start_ms / 1000).toFixed(2) + "s — "
+      + (s.end_ms / 1000).toFixed(2) + "s（" + (s.duration_ms / 1000).toFixed(2) + "s）</h3>"
+      + badges(["景别 " + scaleLabel(s.shot_scale), "运镜 " + motionLabel(s.camera_motion),
+                "功能 " + fnLabel(s.narrative_function), s.review_status])
+      + "<div class='kv'><b>观察事实</b> " + esc(s.observation) + "</div>"
+      + "<div class='kv'><b>表达假设（非作者陈述）</b> " + esc(s.interpretation || "—") + "</div>"
+      + "<div class='kv'><b>可尝试的替代设计</b> " + esc(s.alternative || "—") + "</div>"
+      + "<div class='kv'><b>证据时间点</b> " + (ev || "—") + "</div>"
+      + (s.dialogue ? "<div class='kv'><b>台词</b> " + esc(s.dialogue) + "</div>" : "")
+      + "<div class='kv'><b>不确定性</b> " + esc((s.unknowns || []).join("；") || "—") + "</div>"
+      + know + "</div>";
+  }).join("");
+}
+
+function scaleLabel(v) {
+  var map = { extreme_wide: "大远景", wide: "全景", medium: "中景", medium_close: "中近景",
+    close_up: "近景", extreme_close_up: "特写", unknown: "未知" };
+  return map[v] || v;
+}
+function motionLabel(v) {
+  var map = { static: "固定", pan: "横摇", tilt: "纵摇", dolly: "移动", zoom: "变焦",
+    handheld: "手持", unknown: "未知" };
+  return map[v] || v;
+}
+function fnLabel(v) {
+  var map = { establish: "建立环境", introduce_subject: "引入主体", develop: "推进信息",
+    emphasize_emotion: "情绪强调", transition: "转场过渡", unknown: "未判定" };
+  return map[v] || v;
+}
+
+async function switchIntent(intent) {
+  if (!ANALYSIS) return;
+  var body = await api("/analyses/" + ANALYSIS.id + "/explanations?intent=" + intent);
+  log("已切换学习意图：" + body.intent_label + "（事实时间线不变：" + body.fact_timeline_unchanged + "）");
+  var map = {};
+  body.explanations.forEach(function (e) { map[e.shot_ref] = e; });
+  ANALYSIS.shots.forEach(function (s) {
+    var e = map[s.shot_ref];
+    if (e) s.observation = e.observation + "｜本次意图解读：" + e.intent_reading;
+  });
+  renderShots(ANALYSIS.shots);
+}
+
+async function makeTask(level) {
+  if (!ANALYSIS) { log("请先完成一次拆解"); return; }
+  TASK = await api("/analyses/" + ANALYSIS.id + "/learning-tasks", {
+    method: "POST", json: { level: level, intent: ANALYSIS.intent }
+  });
+  el("task").innerHTML = "<h3>" + esc(TASK.title) + "</h3>"
+    + "<div class='kv'><b>级别</b> " + esc(level) + "</div>"
+    + "<div class='kv'><b>目标</b> " + esc(TASK.objective) + "</div>"
+    + "<div class='kv'><b>预计用时</b> " + TASK.estimated_minutes + " 分钟</div>"
+    + "<div class='kv'><b>先修知识</b> " + TASK.prerequisites.map(function (p) { return esc(p.title); }).join("、") + "</div>"
+    + "<div class='kv'><b>步骤</b></div><ol>"
+    + TASK.steps.map(function (s) { return "<li><b>" + esc(s.title) + "</b>：" + esc(s.detail) + "</li>"; }).join("")
+    + "</ol>"
+    + "<div class='kv'><b>约束</b> " + esc(JSON.stringify(TASK.constraints)) + "</div>"
+    + "<div class='kv'><b>提交要求</b></div><ul>"
+    + TASK.submission_requirements.map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("") + "</ul>"
+    + "<div class='kv'><b>评价量表（每项 0—4 分）</b></div><table>"
+    + TASK.rubric.map(function (r) {
+        return "<tr><th>" + esc(r.criterion) + "</th><td>" + esc(r.scale) + "</td></tr>";
+      }).join("") + "</table>"
+    + "<div class='kv'><b>工具说明</b> " + esc(TASK.tools.join(" ")) + "</div>";
+  log("学习任务已生成：" + TASK.id);
+}
+
+async function submitWork() {
+  if (!TASK) { log("请先生成一个学习任务"); return; }
+  var file = el("subFile").files[0];
+  if (!file) { log("请选择作业视频"); return; }
+  try {
+    if (!PROJECT_ID) await createProject();
+    var ticket = await api("/projects/" + PROJECT_ID + "/uploads", {
+      method: "POST",
+      json: { filename: file.name, size_bytes: file.size, media_type: file.type || "video/mp4" }
+    });
+    var putUrl = ticket.upload_url.charAt(0) === "/" ? location.origin + ticket.upload_url : ticket.upload_url;
+    var put = await fetch(putUrl, { method: "PUT", body: file, headers: { "Content-Type": file.type || "video/mp4" } });
+    if (!put.ok) throw new Error("上传失败 " + put.status);
+    await api("/assets/" + ticket.asset_id + "/complete", { method: "POST" });
+    var job = await api("/learning-tasks/" + TASK.id + "/submissions", {
+      method: "POST",
+      headers: { "Idempotency-Key": "demo-sub-" + ticket.asset_id },
+      json: {
+        asset_id: ticket.asset_id,
+        learner_reason: el("reason").value,
+        storyboard_text: el("storyboard").value
+      }
+    });
+    await pollJob(job.job_id);
+  } catch (e) { log("作业流程中断：" + e.message); }
+}
+
+async function loadFeedback(feedbackId) {
+  var list = await api("/feedback/" + feedbackId);
+  var m = list.metrics;
+  el("feedback").innerHTML = "<h3>结构反馈</h3>"
+    + "<div class='kv'>" + esc(list.summary) + "</div>"
+    + "<table><tr><th>指标</th><th>参考片</th><th>作业</th><th>差异</th></tr>"
+    + [["shot_count", "镜头数"], ["shot_duration_mean_ms", "平均镜头(ms)"],
+       ["cut_rate_per_minute", "切镜频率"], ["duration_ms", "总时长(ms)"]].map(function (r) {
+        var d = m[r[0]] || {};
+        return "<tr><th>" + r[1] + "</th><td>" + d.reference + "</td><td>" + d.submission
+          + "</td><td>" + d.delta + "</td></tr>";
+      }).join("") + "</table>"
+    + "<h3 style='margin-top:12px'>建议（参考证据 → 作业证据 → 差异 → 与目标关系 → 可执行动作）</h3>"
+    + list.suggestions.map(function (s) {
+        return "<div class='kv'><b>" + esc(s.id + " · " + s.target) + "</b><br>动作：" + esc(s.action)
+          + "<br><span class='muted'>与学习目标的关系：" + esc(s.goal_link) + "</span></div>";
+      }).join("")
+    + "<h3 style='margin-top:12px'>镜头对齐（允许未匹配）</h3><table>"
+    + "<tr><th>参考</th><th>作业</th><th>对齐方式</th><th>确定性</th></tr>"
+    + list.alignments.slice(0, 20).map(function (a) {
+        return "<tr><td>" + esc(a.reference_shot_ref || "-") + "</td><td>" + esc(a.submission_shot_ref || "-")
+          + "</td><td>" + esc(a.method) + "</td><td>" + esc(a.certainty) + "</td></tr>";
+      }).join("") + "</table>"
+    + (list.storyboard_metrics && list.storyboard_metrics.checks
+        ? "<h3 style='margin-top:12px'>文字分镜评分（与成片分开呈现）</h3>"
+          + list.storyboard_metrics.checks.map(function (c) {
+              return "<div class='kv'>" + (c.passed ? "通过" : "未通过") + "：" + esc(c.detail) + "</div>";
+            }).join("")
+        : "");
+  log("反馈已生成（" + list.suggestions.length + " 条建议）");
+}
+
+async function exportMd() {
+  if (!ANALYSIS) return;
+  var res = await fetch(API + "/analyses/" + ANALYSIS.id + "/export?format=md", {
+    headers: { "Authorization": "Bearer " + TOKEN }
+  });
+  var text = await res.text();
+  var blob = new Blob([text], { type: "text/markdown;charset=utf-8" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "chai-jing-" + ANALYSIS.id.slice(0, 8) + ".md";
+  a.click();
+  log("已导出 Markdown（" + text.length + " 字符）");
+}
+
+(function init() {
+  var link = el("sourceLink");
+  if (link) link.href = SOURCE_URL;
+  loadMeta().catch(function (e) { el("meta").textContent = "后端不可用：" + e.message; });
+  doLogin();
+})();
+</script>
+</body>
+</html>
